@@ -1,4 +1,4 @@
-import csvreader
+import csv_reader
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -12,11 +12,14 @@ class dp_trend(object):
 
 	def min_dp(self):
 		return min(self.dp)
+
 	def max_dp(self):
 		return max(self.dp)
 
+
+
 def main():
-	data = csvreader.csv_array("")
+	data = csv_reader.csv_array("")
 	# daily price array
 	dp = data.get_dp()
 	lp = data.get_lp()
