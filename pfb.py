@@ -7,7 +7,7 @@ response = requests.get(url)
 text = response.text
 print(text)
 
-filename = os.getcwd()+'/data/VGT'
+filename = os.getcwd()+'/data/VGT.csv'
 
 if not os.path.exists(os.path.dirname(filename)):
 	try:
