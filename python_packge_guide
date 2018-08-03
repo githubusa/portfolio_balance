@@ -1,0 +1,17 @@
+1. pip install --user pipenv
+2. add pipenv to the path
+3.  cd myproject
+pipenv install requests
+4. create a sample project
+import requests
+
+response = requests.get('https://httpbin.org/ip')
+
+print('Your IP is {0}'.format(response.json()['origin']))
+
+5. test run 
+
+
+pipenv run python main.py
+
+
