@@ -1,3 +1,4 @@
+import collections
 import csv_reader
 import matplotlib.pyplot as plt
 import numpy as np
@@ -66,14 +67,24 @@ class dp_trend(object):
 			up.append(item)
 		if trend_mark == "down":
 			down.append(item)
-		self.up_trend = up
-		self.down_trend = down
+		
+		#to final arrays
+		for it in up:
+			self.up_trend.append(it[0])
+		for it in down:
+			self.down_trend.append(it[0])
+		
 
 	def print_trend(self):
 		"""visulization of the trend"""
 		self.up_down_trend()
-		print(self.up_trend)
-		print(self.down_trend)
+		print("up trend", self.up_trend)
+		print("down trend", self.down_trend)
+		counter=collections.Counter(self.up_trend)
+		print("up trend", counter)
+		counter=collections.Counter(self.down_trend)
+		print("down trend", counter)
+		
 
 	def test_trend(self):
 		sim = [1,1,2,3,1,2,1,2,4,6,6,5,3,2,2]
@@ -149,8 +160,6 @@ def main():
 
 	
 	dp_t.print_trend()		
-
-
 
 
 if __name__ == "__main__":
