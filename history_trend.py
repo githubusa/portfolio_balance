@@ -1,4 +1,5 @@
 import collections
+import statistics 
 import csv_reader
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,8 +24,8 @@ class dp_trend(object):
 	def up_down_trend(self):
 		print("trend")
 		sim = self.dp
-		print(sim)
-		print(len(sim))
+		#print(sim)
+		#print(len(sim))
 
 		up = []
 		down = []
@@ -140,6 +141,9 @@ def main():
 	dp = data.get_dp()
 	lp = data.get_lp()
 	hp = data.get_hp()
+
+	print("dp mean")
+	print(statistics.mean(dp))
 
 	dp_t = dp_trend(dp)
 	print(dp_trend.min_dp(dp_t))
