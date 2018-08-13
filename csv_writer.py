@@ -4,12 +4,12 @@ import os
 class array_csv(object):
 	
 	"""docstring for ClassName"""
-	def __init__(self, stock, array):
+	def __init__(self, stock, result):
 		super(array_csv, self).__init__()
 		#stock symbol
 		self.stock = stock
 
-		self.result = array
+		self.result = result
 	
 		#handle new file
 		filename = os.getcwd()+'/data/VGT' +'_result.csv'

@@ -1,6 +1,7 @@
 import collections
 import statistics 
 import csv_reader
+import csv_writer
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -24,7 +25,11 @@ class dp_trend(object):
 		return max(self.dp)
 
 	def up_down_trend(self):
-		print("trend")
+		"""
+		prepare data foundation for further analysis
+		1. days in up and downs
+		2. prices in each up and down bucket
+		"""
 		sim = self.dp
 		
 		up = []
@@ -125,6 +130,49 @@ class dp_trend(object):
 		counter=collections.Counter(self.down_trend)
 		print("down trend", counter)
 		
+	def get_trend_info(self):
+		self.up_down_trend()
+		#self.uptrend_days = collections.Counter(self.up_trend)
+		return self.up_trend, self.down_trend, self.up_price, self.down_price
+
+	def draw_trend_hist(self, data):
+		up_trend, down_trend, up_price, down_price = self.get_trend_info()
+
+		days = []
+		numbers = []
+		#up trend
+
+		#use frequenet data directly
+		plt.hist(up_trend)
+		#plt.xticks(days)
+
+		plt.title("Up Days")
+		plt.xlabel("Days")
+		plt.ylabel("Numbers")
+		#plt.show()
+		plt.savefig('imgs/up_days.png')
+		plt.close()
+
+		#down trend
+		plt.hist(down_trend)
+		#plt.xticks(days)
+
+		plt.title("Down Days")
+		plt.xlabel("Days")
+		plt.ylabel("Numbers")
+		#plt.show()
+		plt.savefig('imgs/down_days.png')
+
+	def write_csv(self):
+		data = []
+		data.append(["up", "down"])
+
+		data.append([len(self.up_trend), len(self.down_trend)])
+
+		#convert itrerable to string
+		print( " ".join(map(str, data[1])))
+
+		csv_writer.array_csv("", data)
 
 	def test_trend(self):
 		sim = [1,1,2,3,1,2,1,2,4,6,6,5,3,2,2,1,2,1,0.5,0.4,0.3,0.2]
@@ -210,6 +258,8 @@ class dp_trend(object):
 		print(up_price)
 		print(down_price)
 
+	
+
 def main():
 	data = csv_reader.csv_array("")
 	# daily price array
@@ -218,8 +268,17 @@ def main():
 	hp = data.get_hp()
 
 	dp_t = dp_trend(dp)
+	dp_t.draw_trend_hist([])
 	#print trend results
-	dp_t.print_trend()	
+	#dp_t.print_trend()
+	#dp_t.write_csv()	
+
+	
+
+	#dp_t.draw_hist([])
+
+	#plt.savefig('imgs/up_days.png')
+	#print(up_days, up_price)
 	"""
 	print("dp mean")
 	print(statistics.mean(dp))
