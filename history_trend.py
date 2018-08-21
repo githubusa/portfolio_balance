@@ -135,6 +135,26 @@ class dp_trend(object):
 		#self.uptrend_days = collections.Counter(self.up_trend)
 		return self.up_trend, self.down_trend, self.up_price, self.down_price
 
+	def get_price_delta(self):
+		up_trend, down_trend, up_price, down_price = self.get_trend_info()
+		print(up_price)
+		price_delta = []
+		price_deltas = {}
+		for key, prices in up_price.items():
+			gap = (prices[-1]-prices[0])/prices[0]
+			len_day = len(prices)
+			if len_day in price_deltas:
+				price_delta = price_deltas[len_day]
+				price_delta.append(gap)
+			else:
+				price_delta.append(gap)
+				price_deltas[len_day] = price_delta
+			price_delta = []
+		for len_day, price_delta in price_deltas.items():
+			print("days in period: ", len_day)
+			print("min, max: ", min(price_delta), max(price_delta))
+			print("avg: ", (max(price_delta)-min(price_delta))/len_day)
+
 	def draw_trend_hist(self, data):
 		up_trend, down_trend, up_price, down_price = self.get_trend_info()
 
@@ -269,6 +289,7 @@ def main():
 
 	dp_t = dp_trend(dp)
 	dp_t.draw_trend_hist([])
+	dp_t.get_price_delta()
 	#print trend results
 	#dp_t.print_trend()
 	#dp_t.write_csv()	
