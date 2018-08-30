@@ -44,6 +44,9 @@ class dp_trend(object):
 
 		#information to record, days in trend
 		item = [0]
+		days = [0]
+		
+
 		price.append(sim[0])
 		
 		for i in range(1, len(sim)):
@@ -55,6 +58,7 @@ class dp_trend(object):
 					trend_mark = "down"
 					
 				item[0] = 1
+				
 
 			if trend_mark == "up":
 				#include equal in the up trend
@@ -62,32 +66,43 @@ class dp_trend(object):
 					trend_mark = "up"
 					# days in the trend
 					item[0] = item[0] +1
+					days.append(i)
 					# price in the bucket
 					price.append(sim[i])
 				if sim[i] < sim[i-1]:
 					#trend turning point
 					trend_mark = ""
+					item.append(days)
 					up.append(item)
+					#create up price idx
 					idx = len(up) -1
 					up_price[idx] = price
 					item = [0]
 					price = []
+					# put current day in the new trend
+					days = []
+					days.append(i)
 					price.append(sim[i])
 				continue				
 			if trend_mark == "down":
 				if sim[i] > sim[i-1]:
 					#trend turning point
 					trend_mark = ""
+					item.append(days)
 					down.append(item)
 					idx = len(down) -1
 					down_price[idx] = price
 					item = [0]
 					price = []
+					days = []
+					days.append(i)
 					price.append(sim[i])
 				if sim[i] <= sim[i-1]:
 					trend_mark = "down"
 					# days in the trend
 					item[0] = item[0] +1 
+					days.append(i)
+					#item.append(days)
 					# price in the bucket
 					price.append(sim[i])
 		#process last group 
@@ -100,7 +115,8 @@ class dp_trend(object):
 			idx = len(down) -1
 			down_price[idx] = price
 
-
+		print(up)
+		print(down)
 		#reset 
 		item =[0]
 		price = []
